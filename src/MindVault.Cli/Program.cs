@@ -1,8 +1,15 @@
 using System.CommandLine;
 using Microsoft.Extensions.DependencyInjection;
-using MindVault.Application;
-using MindVault.Domain;
-using MindVault.Infrastructure;
+using MindVault.Application.Abstractions.Configuration;
+using MindVault.Application.Abstractions.Editors;
+using MindVault.Application.Abstractions.Notes;
+using MindVault.Application.Configuration;
+using MindVault.Application.Diagnostics;
+using MindVault.Application.Notes;
+using MindVault.Domain.Common;
+using MindVault.Infrastructure.Configuration;
+using MindVault.Infrastructure.Editors;
+using MindVault.Infrastructure.Notes;
 
 var services = new ServiceCollection();
 services.AddSingleton<IConfigurationStore>(_ => new JsonConfigurationStore(ConfigurationPathLocator.GetPath()));

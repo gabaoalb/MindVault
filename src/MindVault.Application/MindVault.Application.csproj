@@ -1,3 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup><ProjectReference Include="../MindVault.Domain/MindVault.Domain.csproj" /></ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../MindVault.Domain/MindVault.Domain.csproj" />
+  </ItemGroup>
 </Project>

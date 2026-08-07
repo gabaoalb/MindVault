@@ -21,7 +21,9 @@ Criar uma aplicação CLI em C# capaz de:
 5. excluir uma nota;
 6. exibir informações básicas de configuração e diagnóstico.
 
-O vault deve ser somente um diretório comum contendo arquivos Markdown.
+O vault deve ser um diretório comum. Arquivos de notas Markdown devem existir somente diretamente em sua raiz.
+
+Subdiretórios podem existir para dados que não sejam notas, como `.git`, um diretório interno `.mind` reservado para etapas futuras ou possíveis anexos. Não utilize diretórios para classificar conhecimento e não trate arquivos Markdown aninhados como notas.
 
 Os arquivos Markdown são a fonte da verdade do sistema.
 
@@ -70,6 +72,40 @@ Não utilize:
 - abstrações criadas apenas para antecipar funcionalidades futuras.
 
 A arquitetura deve ser extensível, mas não deve ser excessivamente abstrata.
+
+## Flat Vault Principle
+
+Adote como regra arquitetural permanente:
+
+> **MindVault uses a flat filesystem for notes. Directories are not used to express knowledge organization. Classification and relationships are represented through metadata and links, while hierarchical views are generated dynamically by clients.**
+
+Separe organização física de organização lógica:
+
+```text
+Physical: vault/*.md
+Logical:  tags, projects, areas, types, status, links, queries and views
+```
+
+Uma nota pode pertencer simultaneamente a vários assuntos, áreas e projetos sem ser duplicada ou movida. Funcionalidades futuras devem representar esses contextos por metadados e relações, nunca por caminhos de diretório.
+
+Tags futuras devem ser valores independentes, como `programming`, `dotnet` e `ef-core`. Não recrie hierarquias de filesystem dentro de uma tag, como `programming/dotnet/ef-core`, e não use tags para misturar assunto, tipo, estado, prioridade e projeto quando esses conceitos merecerem campos próprios.
+
+O modelo futuro pode evoluir na direção abaixo, sem implementá-lo nesta etapa:
+
+```yaml
+---
+type: note
+status: active
+tags:
+  - electronics
+  - esp32
+  - pwm
+areas:
+  - electronics
+projects:
+  - fan-controller
+---
+```
 
 ---
 
@@ -337,9 +373,9 @@ mind note create "Arquitetura do Price Watcher" --no-open
 mind note list
 ```
 
-A listagem deve inspecionar os arquivos `.md` do vault.
+A listagem deve inspecionar somente os arquivos `.md` localizados diretamente na raiz do vault.
 
-Nesta etapa, considere somente arquivos localizados diretamente no diretório raiz do vault. Não implemente ainda organização recursiva em pastas, a menos que isso torne o código mais simples sem alterar o comportamento público.
+Não faça busca recursiva. Notas Markdown aninhadas não fazem parte do vault lógico, inclusive em etapas futuras. Uma versão futura de `doctor` poderá detectá-las e sugerir sua movimentação, mas não implemente correção automática nesta etapa.
 
 Exiba ao menos:
 
@@ -751,6 +787,8 @@ Também explique explicitamente:
 
 > Os arquivos Markdown são a fonte da verdade. A aplicação apenas facilita sua criação, localização, edição e organização.
 
+Documente também o **Flat Vault Principle**, explicando que notas existem somente na raiz e que hierarquias futuras serão visões derivadas de metadados e consultas.
+
 ---
 
 # 16. Funcionalidades futuras que não devem ser implementadas agora
@@ -759,8 +797,11 @@ Registre no README uma seção de roadmap, mas não implemente:
 
 ## Etapa 2 — Organização
 
-- pastas;
-- tags;
+- tags independentes e não hierárquicas;
+- áreas;
+- projetos como relações, sem diretórios;
+- tipo da entidade;
+- status;
 - aliases;
 - templates;
 - notas diárias;
@@ -768,6 +809,8 @@ Registre no README uma seção de roadmap, mas não implemente:
 - wikilinks;
 - busca textual;
 - inbox.
+
+Não implemente pastas para organizar notas. Campos como `tags`, `areas`, `projects`, `type` e `status` devem ter responsabilidades distintas, evitando transformar `tags` em um campo genérico para toda classificação.
 
 ## Etapa 3 — Indexação
 
@@ -777,6 +820,8 @@ Registre no README uma seção de roadmap, mas não implemente:
 - detecção de links quebrados;
 - notas órfãs;
 - comando de reconstrução do índice.
+
+O índice deve ser somente uma projeção materializada e descartável dos arquivos Markdown, metadados e relações. Markdown continua sendo a fonte da verdade.
 
 ## Etapa 4 — Tarefas e projetos
 
@@ -817,9 +862,11 @@ Registre no README uma seção de roadmap, mas não implemente:
 
 ## Etapa 8 — Outras interfaces
 
-- aplicação TUI;
+- aplicação TUI com visões virtuais por tags, projetos, áreas, tipo, período e consultas;
 - API local opcional;
 - outras interfaces independentes sobre o mesmo Application e Domain.
+
+As hierarquias exibidas pela TUI devem ser geradas dinamicamente; não devem corresponder a diretórios físicos de notas.
 
 ---
 

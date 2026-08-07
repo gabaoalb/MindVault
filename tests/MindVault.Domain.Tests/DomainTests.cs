@@ -1,5 +1,5 @@
 using Xunit;
-using MindVault.Domain;
+using MindVault.Domain.Notes;
 namespace MindVault.Domain.Tests;
 public sealed class DomainTests
 {
