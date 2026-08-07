@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <AssemblyName>mind</AssemblyName>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="../MindVault.Application/MindVault.Application.csproj" />
+        <ProjectReference Include="../MindVault.Infrastructure/MindVault.Infrastructure.csproj" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+        <PackageReference Include="System.CommandLine" />
+    </ItemGroup>
+</Project>

@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk"><ItemGroup><ProjectReference Include="../MindVault.Application/MindVault.Application.csproj" /><ProjectReference Include="../MindVault.Domain/MindVault.Domain.csproj" /><PackageReference Include="YamlDotNet" /></ItemGroup></Project>

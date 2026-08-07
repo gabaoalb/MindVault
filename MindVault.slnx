@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MindVault.Application/MindVault.Application.csproj" />
+    <Project Path="src/MindVault.Cli/MindVault.Cli.csproj" />
+    <Project Path="src/MindVault.Domain/MindVault.Domain.csproj" />
+    <Project Path="src/MindVault.Infrastructure/MindVault.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MindVault.Application.Tests/MindVault.Application.Tests.csproj" />
+    <Project Path="tests/MindVault.Domain.Tests/MindVault.Domain.Tests.csproj" />
+    <Project Path="tests/MindVault.Infrastructure.Tests/MindVault.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>
